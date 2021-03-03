@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 // use router
-let routers = require('./api/routers');
+let routers = require('./api/routers/routers');
 routers(app);
 
 // return 404

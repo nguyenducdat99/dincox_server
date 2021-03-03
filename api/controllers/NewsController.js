@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const db = require('../db');
+const db = require('../database/db');
 const { response } = require('express');
 
 module.exports = {
@@ -15,29 +15,39 @@ module.exports = {
         let sql = "SELECT * FROM tblnews WHERE id_new=?";
         let id = req.params.id;
 
-        db.query(sql, (err, response) => {
+        db.query(sql,[id], (err, response) => {
             if (err) throw err;
             res.json(response[0]);
         });
     },
     store: (req, res) => {
-        let sql = "INSERT INTO tblnews VALUE ?";
+        let sql = "INSERT INTO " +
+        "tblnews(id_account,title,contents,status)"+
+        " VALUE (?,?,?,?)";
         let data = req.body;
 
-        db.query(sql, [data], (err, response) => {
-            if (err) throw err;
-            res.json({'message': "Insert Success."});
-        });
+        db.query(
+            sql, 
+            [data.id_account,data.title,data.contents,(data.status*1)], 
+            (err, response) => {
+                if (err) throw err;
+                res.json({'message': "Insert Success."});
+            });
     },
     update: (req, res) => {
-        let sql = "UPDATE tblnews SET ? WHERE id_new=?";
+        let sql = "UPDATE tblnews "+
+        "SET id_account=?,title=?,contents=?,status=?"+
+        " WHERE id_new=?";
         let data = req.body;
         let id = req.params.id;
 
-        db.query(sql, [data, id], (err, response) => {
-            if (err) throw err;
-            res.json({'message': 'Update Success'});
-        });        
+        db.query(
+            sql, 
+            [data.id_account,data.title,data.contents,(data.status*1), id], 
+            (err, response) => {
+                if (err) throw err;
+                res.json({'message': 'Update Success'});
+            });        
     },
     delete: (req, res) => {
         let sql = "DELETE FROM tblnews WHERE id_new=?";

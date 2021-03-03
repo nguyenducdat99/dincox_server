@@ -1,6 +1,6 @@
 module.exports = function(app) {
     // product router
-    let productsCtrl = require('./controllers/ProductsController');
+    let productsCtrl = require('../controllers/ProductsController');
  
     app.route('/products')
         .get(productsCtrl.get)
@@ -11,7 +11,7 @@ module.exports = function(app) {
         .delete(productsCtrl.delete);
 
     // account router
-    let accountsCtrl = require('./controllers/AccountsController');
+    let accountsCtrl = require('../controllers/AccountsController');
 
     app.route('/accounts')
         .get(accountsCtrl.get)
@@ -22,7 +22,7 @@ module.exports = function(app) {
         .delete(accountsCtrl.delete);
 
     // categories router
-    let categoriesCtrl = require('./controllers/CategoriesController');
+    let categoriesCtrl = require('../controllers/CategoriesController');
 
     app.route('/categories')
         .get(categoriesCtrl.get)
@@ -33,18 +33,18 @@ module.exports = function(app) {
         .delete(categoriesCtrl.delete);
 
     // images router
-    let imagesCtrl = require('./controllers/ImagesController');
+    let imagesCtrl = require('../controllers/ImagesController');
 
     app.route('/images')
         .get(imagesCtrl.get)
         .post(imagesCtrl.store);
-    app.route('/images')
+    app.route('/images/:id')
         .get(imagesCtrl.detail)
         .put(imagesCtrl.update)
         .delete(imagesCtrl.delete);
 
     // size router
-    let sizeCtrl = require('./controllers/SizesController');
+    let sizeCtrl = require('../controllers/SizesController');
 
     app.route('/sizes')
         .get(sizeCtrl.get)
@@ -55,7 +55,7 @@ module.exports = function(app) {
         .delete(sizeCtrl.delete);
 
     // new router
-    let newsCtrl = require('./controllers/NewsController');
+    let newsCtrl = require('../controllers/NewsController');
 
     app.route('/news')
         .get(newsCtrl.get)
