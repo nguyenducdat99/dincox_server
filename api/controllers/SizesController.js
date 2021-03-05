@@ -22,27 +22,27 @@ module.exports = {
     },
     store: (req, res) => {
         let sql = "INSERT INTO " + 
-        "tblsizes(sizename,status)" +
+        "tblsizes(size_name,status)" +
         "values(?,?)";
         let data = req.body;
 
         db.query(
             sql, 
-            [data.sizename,(data.status*1)], 
+            [data.size_name,(data.status*1)], 
             (err, response) => {
                 if(err) throw err;
                 res.json({'message': 'Insert Success.'});
             });
     },
     update: (req, res) => {
-        let sql = "UPDATE tblsizes SET  sizename=?, status=?" +
+        let sql = "UPDATE tblsizes SET  size_name=?, status=?" +
         " WHERE id_size=?";
         let data = req.body;
         let id = req.params.id;
 
         db.query(
             sql, 
-            [data.sizename,(data.status*1),id], 
+            [data.size_name,(data.status*1),id], 
             (err, response) => {
                 if (err) throw err;
                 res.json({'message': 'Update Success.'});

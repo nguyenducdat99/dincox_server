@@ -38,7 +38,6 @@ module.exports = {
         "VALUES (?,?)";
         let data = req.body;
         
-
         db.query(sql, [ data.category_name, (data.status*1)], (err, response) =>{
             if (err) throw err;
             res.json({'message': "Insert Success."});

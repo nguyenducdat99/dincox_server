@@ -38,7 +38,7 @@ module.exports = {
     }, 
     update: (req, res) => {
         let sql = "UPDATE tblimages " +
-        "SET id_account=?, id_product=?, id_new=?, title=?, path=?, status=?" +
+        "SET  id_product=?, id_new=?, title=?, path=?, status=?" +
         " WHERE id_image=?";
         let data = req.body;
         let id = req.params.id;
@@ -47,7 +47,7 @@ module.exports = {
 
         db.query(
             sql, 
-            [data.id_account, idProduct, idNew, data.title, data.path, (data.status*1), id], 
+            [ idProduct, idNew, data.title, data.path, (data.status*1), id], 
             (err, response)=>{
                 if (err) throw err;
                 res.json({'message': 'Update Success.'});
