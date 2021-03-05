@@ -22,13 +22,13 @@ module.exports = {
     },
     store: (req, res) => {
         let sql = "INSERT INTO " +
-        "tblnews(id_account,title,contents,status)"+
-        " VALUE (?,?,?,?)";
+        "tblnews(title,contents,status)"+
+        " VALUE (?,?,?)";
         let data = req.body;
 
         db.query(
             sql, 
-            [data.id_account,data.title,data.contents,(data.status*1)], 
+            [data.title,data.contents,(data.status*1)], 
             (err, response) => {
                 if (err) throw err;
                 res.json({'message': "Insert Success."});
@@ -36,14 +36,14 @@ module.exports = {
     },
     update: (req, res) => {
         let sql = "UPDATE tblnews "+
-        "SET id_account=?,title=?,contents=?,status=?"+
+        "SET title=?,contents=?,status=?"+
         " WHERE id_new=?";
         let data = req.body;
         let id = req.params.id;
 
         db.query(
             sql, 
-            [data.id_account,data.title,data.contents,(data.status*1), id], 
+            [data.title,data.contents,(data.status*1), id], 
             (err, response) => {
                 if (err) throw err;
                 res.json({'message': 'Update Success'});

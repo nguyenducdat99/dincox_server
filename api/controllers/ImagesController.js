@@ -22,15 +22,15 @@ module.exports = {
     },
     store: (req, res) => {
         let sql = "INSERT INTO " + 
-        "tblimages(id_account, id_product, id_new, title, path, status) " +
-        "VALUES (?,?,?,?,?,?)";
+        "tblimages( id_product, id_new, title, path, status) " +
+        "VALUES (?,?,?,?,?)";
         let data = req.body;
         let idProduct = (data.id_product==='')?null:data.id_product;
         let idNew = (data.id_new==='')?null:data.id_new;
         
         db.query(
             sql, 
-            [data.id_account, idProduct, idNew, data.title, data.path, (data.status*1)], 
+            [idProduct, idNew, data.title, data.path, (data.status*1)], 
             (err, response)=>{
                 if (err) throw err;
                 res.json({'message': 'Insert Success.'});

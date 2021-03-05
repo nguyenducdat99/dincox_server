@@ -23,14 +23,14 @@ module.exports = {
         let data = req.body;
         let id = req.params.id;
         let sql = "UPDATE tblproducts " + 
-        "SET id_category=?,id_account=?,product_name=?,is_sale=?,description=?,"+
-        "count_comment=?,count_buy=?,price=?,status=? " + 
+        "SET id_category=?,product_name=?,is_sale=?,description=?,"+
+        "amount_comment=?,amount_buy=?,price=?,status=? " + 
         "WHERE id_product = ?";
 
         db.query(
             sql, 
-            [data.id_category,data.id_account,data.product_name,(data.is_sale*1),
-            data.description,data.count_comment,data.count_buy,data.price,(data.status*1), id], 
+            [data.id_category,data.product_name,(data.is_sale*1),
+            data.description,data.amount_comment,data.amount_buy,data.price,(data.status*1), id], 
             (err, response) => {
                 if (err) throw err;
                 res.json({'message': 'Update Success!'});
@@ -39,14 +39,14 @@ module.exports = {
     store: (req, res) => {
         let data = req.body;
         let sql = "INSERT INTO " + 
-        "tblproducts(id_category,id_account,product_name,is_sale,description,count_comment," + 
-        "count_buy,price,status)" + 
-        " VALUE (?,?,?,?,?,?,?,?,?)";
+        "tblproducts(id_category,product_name,is_sale,description,amount_comment," + 
+        "amount_buy,price,status)" + 
+        " VALUE (?,?,?,?,?,?,?,?)";
 
         db.query(
             sql, 
-            [data.id_category,data.id_account,data.product_name,(data.is_sale*1),
-            data.description,data.count_comment,data.count_buy,data.price,(data.status*1)], 
+            [data.id_category,data.product_name,(data.is_sale*1),
+            data.description,data.amount_comment,data.amount_buy,data.price,(data.status*1)], 
             (err, response) => {
                 if (err) throw err;
                 res.json({'message': "Insert Success!"});
