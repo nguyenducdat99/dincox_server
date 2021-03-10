@@ -1,8 +1,40 @@
 const mysql = require('mysql');
 const db = require('../database/db');
 const { response } = require('express');
+const jwt = require('jsonwebtoken');
+var token = '';
 
 module.exports = {
+    login: (req, res) => {
+        let sql = 'SELECT * FROM tblaccounts WHERE user_name=? AND password=?';
+        let data = req.body;
+
+        db.query(sql, [data.user_name, data.password], (err, response) => {
+            if (err) throw err;
+            if (typeof response[0] === "undefined") {
+                res.json(
+                    {
+                        message: "Sai tài khoản hoặc mật khẩu.",
+                        user_name: data.user_name,
+                        token: ''
+                    }
+                );
+            }else{
+                try {
+                    token = jwt.sign({user_name: data.user_name},'accountlive');
+                    res.json(
+                        {
+                            message: 'Đăng nhập thành công',
+                            user_name: data.user_name,
+                            token: token
+                        }
+                    );
+                } catch (error) {
+                    res.json(error)
+                }
+            };
+        });
+    },
     get: (req, res) => {
         let sql = 'SELECT * FROM tblaccounts';
 

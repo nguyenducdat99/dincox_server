@@ -20,7 +20,8 @@ module.exports = function(app) {
         .get(accountsCtrl.detail)
         .put(accountsCtrl.update)
         .delete(accountsCtrl.delete);
-
+    app.route('/login')
+        .post(accountsCtrl.login);
     // categories router
     let categoriesCtrl = require('../controllers/CategoriesController');
 

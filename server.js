@@ -22,5 +22,5 @@ app.use( (req, res) => {
 });
 
 app.listen(POST, () => {// run on post
-    console.log("Dincox server started on: " + POST);
+    console.log("Dincox server đang chạy trên port: " + POST);
 })
