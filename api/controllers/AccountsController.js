@@ -32,7 +32,16 @@ module.exports = {
             [data.password, data.position, data.email, (data.status*1),id], 
             (err, response) => {
                 if (err) throw err;
-                res.json({'message': 'Update success.'});
+                res.json(
+                    {
+                        id_account: id,
+                        user_name: data.user_name,
+                        password: data.password,
+                        position: data.position,
+                        email: data.email,
+                        status: (data.status*1)
+                    }
+                );
             });
     },
     store: (req, res) => {
@@ -46,7 +55,16 @@ module.exports = {
             [data.user_name, data.password, data.position, data.email, (data.status*1)], 
             (err, response) => {
                 if (err) throw err;
-                res.json({'message': 'Insert Success.'});
+                res.json(
+                    {
+                        id_account: response.insertId,
+                        user_name: data.user_name,
+                        password: data.password,
+                        position: data.position,
+                        email: data.email,
+                        status: (data.status*1)
+                    }
+                );
             });
     },
     delete: (req, res) => {
