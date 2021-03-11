@@ -29,7 +29,11 @@ module.exports = {
 
         db.query(sql, [data.category_name, (data.status*1), id], (err, response) => {
             if (err) throw err;
-            res.json({'message': "Update Success."});
+            res.json({
+				id_category: id,
+				category_name: data.category_name,
+				status: (data.status*1)
+			});
         });
     },
     store: (req, res) => {
@@ -40,12 +44,16 @@ module.exports = {
         
         db.query(sql, [ data.category_name, (data.status*1)], (err, response) =>{
             if (err) throw err;
-            res.json({'message': "Insert Success."});
+            res.json({
+				id_category: response.insertId,
+				category_name: data.category_name,
+				status: (data.status*1)
+			});
         });
     },
     delete: (req, res) => {
-        let sql = "DELETE FROM tblcategories WHERE id_categories=?";
-        let id = req.params;
+        let sql = "DELETE FROM tblcategories WHERE id_category=?";
+        let id = req.params.id;
 
         db.query(sql, [id], (err,response)=>{
             if (err) throw err;

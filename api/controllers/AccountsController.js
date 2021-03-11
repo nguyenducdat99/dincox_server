@@ -1,3 +1,4 @@
+require('dotenv').config();
 const mysql = require('mysql');
 const db = require('../database/db');
 const { response } = require('express');
@@ -21,7 +22,7 @@ module.exports = {
                 );
             }else{
                 try {
-                    token = jwt.sign({user_name: data.user_name},'accountlive');
+                    token = jwt.sign({user_name: data.user_name},process.env.JWT_SERCET,{ expiresIn: 60 * 60 * 24 });
                     res.json(
                         {
                             message: 'Đăng nhập thành công',
@@ -29,6 +30,8 @@ module.exports = {
                             token: token
                         }
                     );
+
+
                 } catch (error) {
                     res.json(error)
                 }

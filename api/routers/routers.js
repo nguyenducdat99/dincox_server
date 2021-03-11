@@ -1,4 +1,19 @@
+var authentication = require('../middlewares/authentication');
+
 module.exports = function(app) {
+    // account router
+    let accountsCtrl = require('../controllers/AccountsController');
+    
+    app.route('/accounts')
+        .get(accountsCtrl.get)
+        .post(accountsCtrl.store);
+    app.route('/accounts/:id')
+        .get(accountsCtrl.detail)
+        .put(accountsCtrl.update)
+        .delete(accountsCtrl.delete);
+    app.route('/login')
+        .post(accountsCtrl.login);
+
     // product router
     let productsCtrl = require('../controllers/ProductsController');
  
@@ -10,18 +25,6 @@ module.exports = function(app) {
         .put(productsCtrl.update)
         .delete(productsCtrl.delete);
 
-    // account router
-    let accountsCtrl = require('../controllers/AccountsController');
-
-    app.route('/accounts')
-        .get(accountsCtrl.get)
-        .post(accountsCtrl.store);
-    app.route('/accounts/:id')
-        .get(accountsCtrl.detail)
-        .put(accountsCtrl.update)
-        .delete(accountsCtrl.delete);
-    app.route('/login')
-        .post(accountsCtrl.login);
     // categories router
     let categoriesCtrl = require('../controllers/CategoriesController');
 

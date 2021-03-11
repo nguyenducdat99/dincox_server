@@ -4,10 +4,14 @@ const bodyParser = require('body-parser'); // require body parser
 require('dotenv').config(); //config dotent
 const POST = process.env.POST || 8080; // declare port
 const cors = require('cors');
+const cookieParser = require('cookie-parser')
 
 // use bodyParser
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+// use cookie-parse
+app.use(cookieParser());
 
 // allow access origin
 app.use(cors());
@@ -22,5 +26,5 @@ app.use( (req, res) => {
 });
 
 app.listen(POST, () => {// run on post
-    console.log("Dincox server đang chạy trên port: " + POST);
+    console.log("Dincox server started on port: " + POST);
 })
