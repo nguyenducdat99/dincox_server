@@ -68,4 +68,17 @@ module.exports = function(app) {
         .get(newsCtrl.detail)
         .put(newsCtrl.update)
         .delete(newsCtrl.delete);
+
+    // size detail router
+    let sizeDetailsCtrl = require('../controllers/SizeDetailsController');
+
+    app.route('/size-details')
+        .get(sizeDetailsCtrl.get)
+        .post(sizeDetailsCtrl.store);
+    app.route('/multi-size-details')
+        .get(sizeDetailsCtrl.detail)
+        .put(sizeDetailsCtrl.update)
+        .delete(sizeDetailsCtrl.delete);
+    app.route('/size-details/:id')
+        .get(sizeDetailsCtrl.IdProductdetail);
 };

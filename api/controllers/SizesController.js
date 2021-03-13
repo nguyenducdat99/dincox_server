@@ -31,7 +31,13 @@ module.exports = {
             [data.size_name,(data.status*1)], 
             (err, response) => {
                 if(err) throw err;
-                res.json({'message': 'Insert Success.'});
+                res.json({
+					id_size: response.insertId,
+					size_name: data.size_name,
+					created_at: null,
+					edited_at: null,
+					status: (data.status*1)
+				});
             });
     },
     update: (req, res) => {
@@ -45,9 +51,16 @@ module.exports = {
             [data.size_name,(data.status*1),id], 
             (err, response) => {
                 if (err) throw err;
-                res.json({'message': 'Update Success.'});
+                res.json({
+					id_size: id,
+					size_name: data.size_name,
+					created_at: null,
+					edited_at: null,
+					status: (data.status*1)
+				});
             });
     },
+	
     delete: (req, res) => {
         let sql = 'DELETE FROM tblsizes WHERE id_size=?';
         let id = req.params.id;
