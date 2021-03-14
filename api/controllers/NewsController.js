@@ -22,31 +22,49 @@ module.exports = {
     },
     store: (req, res) => {
         let sql = "INSERT INTO " +
-        "tblnews(title,contents,status)"+
-        " VALUE (?,?,?)";
+        "tblnews(title,author,contents,reference_links,status)"+
+        " VALUE (?,?,?,?,?)";
         let data = req.body;
 
         db.query(
             sql, 
-            [data.title,data.contents,(data.status*1)], 
+            [data.title,data.author,data.contents,data.reference_links,(data.status*1)], 
             (err, response) => {
                 if (err) throw err;
-                res.json({'message': "Insert Success."});
+                res.json({
+                    id_new: response.insertId,
+                    title: data.title,
+                    author: data.author,
+                    created_at: null,
+                    edited_at: null,
+                    contents: data.contents,
+                    reference_links: data.reference_links,
+                    status: (data.status*1)
+                });
             });
     },
     update: (req, res) => {
         let sql = "UPDATE tblnews "+
-        "SET title=?,contents=?,status=?"+
+        "SET title=?,author=?,contents=?,reference_links=?,status=?"+
         " WHERE id_new=?";
         let data = req.body;
         let id = req.params.id;
 
         db.query(
             sql, 
-            [data.title,data.contents,(data.status*1), id], 
+            [data.title,data.author,data.contents,data.reference_links,(data.status*1), id], 
             (err, response) => {
                 if (err) throw err;
-                res.json({'message': 'Update Success'});
+                res.json({
+                    id_new: id,
+                    title: data.title,
+                    author: data.author,
+                    created_at: null,
+                    edited_at: null,
+                    contents: data.contents,
+                    reference_links: data.reference_links,
+                    status: (data.status*1)
+                });
             });        
     },
     delete: (req, res) => {
