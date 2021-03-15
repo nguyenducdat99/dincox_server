@@ -9,24 +9,28 @@ module.exports = {
     login: (req, res) => {
         let sql = 'SELECT * FROM tblaccounts WHERE user_name=? AND password=?';
         let data = req.body;
-
+	
+		console.log(data.user_name);
+		console.log(data.password);
         db.query(sql, [data.user_name, data.password], (err, response) => {
             if (err) throw err;
-            if (typeof response[0] === "undefined") {
+            if (typeof response[0] === "undefined"||response[0].status===0 ) {
                 res.json(
                     {
                         message: "Sai tài khoản hoặc mật khẩu.",
-                        user_name: data.user_name,
+                        user_name: '',
                         token: ''
                     }
                 );
             }else{
                 try {
                     token = jwt.sign({user_name: data.user_name},process.env.JWT_SERCET,{ expiresIn: 60 * 60 * 24 });
-                    res.json(
+                    
+					res.json(
                         {
                             message: 'Đăng nhập thành công',
                             user_name: data.user_name,
+							position: response[0].position,
                             token: token
                         }
                     );

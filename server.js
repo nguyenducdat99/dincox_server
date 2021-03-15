@@ -5,6 +5,7 @@ require('dotenv').config(); //config dotent
 const POST = process.env.POST || 8080; // declare port
 const cors = require('cors');
 const cookieParser = require('cookie-parser')
+const { upload } = require('./api/middlewares/upload')
 
 // use bodyParser
 app.use(bodyParser.urlencoded({extended: true}));
@@ -19,6 +20,14 @@ app.use(cors());
 // use router
 let routers = require('./api/routers/routers');
 routers(app);
+
+// app.use(errHandling);
+app.post('/upload', upload.single('profile'),(req, res) => {
+    const { ass } = req.body;
+    console.log(ass);
+    console.log(req.file);
+    res.json(req.file)
+});
 
 // return 404
 app.use( (req, res) => {

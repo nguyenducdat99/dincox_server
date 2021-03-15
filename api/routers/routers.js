@@ -1,4 +1,5 @@
-var authentication = require('../middlewares/authentication');
+// var authentication = require('../middlewares/authentication');
+const { upload } = require('../middlewares/upload');
 
 module.exports = function(app) {
     // account router
@@ -16,10 +17,12 @@ module.exports = function(app) {
 
     // product router
     let productsCtrl = require('../controllers/ProductsController');
- 
+    let imagesCtrl = require('../controllers/ImagesController');
+
     app.route('/products')
         .get(productsCtrl.get)
-        .post(productsCtrl.store);
+        // .post(upload.single('path'),productsCtrl.store);
+        .post(imagesCtrl.store);
     app.route('/products/:id')
         .get(productsCtrl.detail)
         .put(productsCtrl.update)
@@ -37,8 +40,6 @@ module.exports = function(app) {
         .delete(categoriesCtrl.delete);
 
     // images router
-    let imagesCtrl = require('../controllers/ImagesController');
-
     app.route('/images')
         .get(imagesCtrl.get)
         .post(imagesCtrl.store);

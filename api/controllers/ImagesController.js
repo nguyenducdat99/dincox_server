@@ -28,13 +28,14 @@ module.exports = {
         let idProduct = (data.id_product==='')?null:data.id_product;
         let idNew = (data.id_new==='')?null:data.id_new;
         
-        db.query(
-            sql, 
-            [idProduct, idNew, data.title, data.path, (data.status*1)], 
-            (err, response)=>{
-                if (err) throw err;
-                res.json({'message': 'Insert Success.'});
-            });
+        console.log(data);
+        // db.query(
+        //     sql, 
+        //     [idProduct, idNew, data.title, data.path, (data.status*1)], 
+        //     (err, response)=>{
+        //         if (err) throw err;
+        //         res.json({'message': 'Insert Success.'});
+        //     });
     }, 
     update: (req, res) => {
         let sql = "UPDATE tblimages " +
