@@ -21,11 +21,10 @@ module.exports = function(app) {
 
     app.route('/products')
         .get(productsCtrl.get)
-        // .post(upload.single('path'),productsCtrl.store);
-        .post(imagesCtrl.store);
+        .post(upload.single('path'),productsCtrl.store);
     app.route('/products/:id')
         .get(productsCtrl.detail)
-        .put(productsCtrl.update)
+        .put(upload.single('path'),productsCtrl.update)
         .delete(productsCtrl.delete);
 
     // categories router
@@ -42,7 +41,7 @@ module.exports = function(app) {
     // images router
     app.route('/images')
         .get(imagesCtrl.get)
-        .post(imagesCtrl.store);
+        .post(upload.single('path'),imagesCtrl.store);
     app.route('/images/:id')
         .get(imagesCtrl.detail)
         .put(imagesCtrl.update)
