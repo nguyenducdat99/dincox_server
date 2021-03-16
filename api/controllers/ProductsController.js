@@ -29,11 +29,21 @@ module.exports = {
 
         db.query(
             sql, 
-            [data.id_category,data.product_name,(data.is_sale*1),
+            [data.id_category*1,data.product_name,(data.is_sale*1),
             data.description,data.amount_comment,data.amount_buy,data.price,(data.status*1), id], 
             (err, response) => {
                 if (err) throw err;
-                res.json({'message': 'Update Success!'});
+                res.json({
+					id_product: id*1,
+					id_category: data.id_category*1,
+					product_name: data.product_name,
+					is_sale: (data.is_sale*1),
+					description: data.description,
+					amount_comment: data.amount_comment,
+					amount_buy: data.amount_buy,
+					price: data.price,
+					status: (data.status*1)
+				});
             });
     },
     store: (req, res) => {
@@ -45,11 +55,21 @@ module.exports = {
 
         db.query(
             sql, 
-            [data.id_category,data.product_name,(data.is_sale*1),
+            [data.id_category*1,data.product_name,(data.is_sale*1),
             data.description,data.amount_comment,data.amount_buy,data.price,(data.status*1)], 
             (err, response) => {
                 if (err) throw err;
-                res.json({'message': "Insert Success!"});
+                res.json({
+					id_product: response.insertId,
+					id_category: data.id_category*1,
+					product_name: data.product_name,
+					is_sale: (data.is_sale*1),
+					description: data.description,
+					amount_comment: data.amount_comment,
+					amount_buy: data.amount_buy,
+					price: data.price,
+					status: (data.status*1)
+				});
             });
     },
     delete: (req, res) => {

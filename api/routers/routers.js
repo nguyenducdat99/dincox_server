@@ -21,10 +21,10 @@ module.exports = function(app) {
 
     app.route('/products')
         .get(productsCtrl.get)
-        .post(upload.single('path'),productsCtrl.store);
+        .post(productsCtrl.store);
     app.route('/products/:id')
         .get(productsCtrl.detail)
-        .put(upload.single('path'),productsCtrl.update)
+        .put(productsCtrl.update)
         .delete(productsCtrl.delete);
 
     // categories router
@@ -74,11 +74,11 @@ module.exports = function(app) {
 
     app.route('/size-details')
         .get(sizeDetailsCtrl.get)
-        .post(sizeDetailsCtrl.store);
-    app.route('/multi-size-details')
-        .get(sizeDetailsCtrl.detail)
-        .put(sizeDetailsCtrl.update)
+        .post(sizeDetailsCtrl.store)
+		.put(sizeDetailsCtrl.update)
         .delete(sizeDetailsCtrl.delete);
+    app.route('/multi-size-details')
+        .get(sizeDetailsCtrl.detail);
     app.route('/size-details/:id')
         .get(sizeDetailsCtrl.IdProductdetail);
 };

@@ -10,8 +10,7 @@ module.exports = {
         let sql = 'SELECT * FROM tblaccounts WHERE user_name=? AND password=?';
         let data = req.body;
 	
-		console.log(data.user_name);
-		console.log(data.password);
+
         db.query(sql, [data.user_name, data.password], (err, response) => {
             if (err) throw err;
             if (typeof response[0] === "undefined"||response[0].status===0 ) {
