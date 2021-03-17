@@ -14,6 +14,9 @@ app.use(bodyParser.json());
 // use cookie-parse
 app.use(cookieParser());
 
+// return images
+app.use('/images', express.static('images'));
+
 // allow access origin
 app.use(cors());
 

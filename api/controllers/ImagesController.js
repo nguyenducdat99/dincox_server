@@ -25,14 +25,13 @@ module.exports = {
         "tblimages( id_product, id_new, title, path, status) " +
         "VALUES (?,?,?,?,?)";
         let data = req.body;
-
         
         if (req.file) {
             let idProduct = (data.id_product.trim()==='')?null:data.id_product;
             let idNew = (data.id_new.trim()==='')?null:data.id_new;
             
-            let path = './images/'+req.file.originalname
-
+            let path = '/images/'+req.file.originalname
+						
             db.query(
                 sql, 
                 [idProduct, idNew, data.title, path, (data.status*1)], 
@@ -47,7 +46,10 @@ module.exports = {
                     })
                 }
             );
-        }
+			
+        }else{
+			console.log('File không tồn tại');
+		}
 
 
         
@@ -95,7 +97,7 @@ module.exports = {
             });
     },
     delete: (req, res) => {
-        let sql = 'DELETE FROM tblimage WHERE id_image=?';
+        let sql = 'DELETE FROM tblimages WHERE id_image=?';
         let id = req.params.id;
 
         db.query(sql, [id], (err, response)=>{

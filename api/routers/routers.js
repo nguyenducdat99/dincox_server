@@ -39,10 +39,10 @@ module.exports = function(app) {
         .delete(categoriesCtrl.delete);
 
     // images router
-    app.route('/images')
+    app.route('/collections')
         .get(imagesCtrl.get)
         .post(upload.single('path'),imagesCtrl.store);
-    app.route('/images/:id')
+    app.route('/collections/:id')
         .get(imagesCtrl.detail)
         .put(imagesCtrl.update)
         .delete(imagesCtrl.delete);
