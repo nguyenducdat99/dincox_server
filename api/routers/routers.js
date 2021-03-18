@@ -81,4 +81,20 @@ module.exports = function(app) {
         .get(sizeDetailsCtrl.detail);
     app.route('/size-details/:id')
         .get(sizeDetailsCtrl.IdProductdetail);
+
+    // order, order detail router
+    let orderCtrl = require('../controllers/OrderController');
+    let orderDetailCtrl = require('../controllers/OrderDetailController');
+
+    app.route('/orders')
+        .get(orderCtrl.get)
+        .post(orderCtrl.store);
+    app.route('/orders/:id')
+        .get(orderCtrl.detail);
+    app.route('/orders-detail')
+        .get(orderDetailCtrl.get);
+        // .post(orderDetailCtrl.store);
+    app.route('/orders-detail/:id')
+        .get(orderDetailCtrl.detail);
+
 };
