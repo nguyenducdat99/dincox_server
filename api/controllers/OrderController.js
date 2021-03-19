@@ -19,28 +19,33 @@ module.exports = {
             if (err) throw err;
             res.json(response[0]);
         });
-    },
+    }
+	,
     store: (req, res) => {
         let sql = "INSERT INTO " + 
-        "tblorders(id_account,create_at,email,number_phone,receiver,sent_to,status)" +
-        "values(?,?,?,?,?,?,?)";
-        let data = req.body;
-
+        "tblorders(id_account,create_at,email,number_phone,receiver,sent_to,transport_fee,status)" +
+        "values(?,?,?,?,?,?,?,?)";
+        let data = req.body.info;
+		let transport_fee = data.transportFee;
+		let id_account = data.id_account?data.id_account:37;
+		let d = new Date();
+		let create_at = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+		
         db.query(
             sql, 
-            [data.id_account,data.create_at,data.email,
-                data.number_phone,data.receiver,data.sent_to,(data.status*1)], 
+            [id_account,create_at,data.email,
+                data.numberPhone,data.name,data.address,transport_fee,1], 
             (err, response) => {
                 if(err) throw err;
                 res.json({
 					id_order: response.insertId,
-                    id_account: data.id_account,
-                    create_at: data.create_at,
+                    id_account: id_account,
+                    create_at: create_at,
                     email: data.email,
-                    number_phone: data.number_phone,
-                    receiver: data.receiver,
-                    sent_to: data.sent_to,
-                    status: (data.status*1)
+                    number_phone: data.numberPhone,
+                    receiver: data.name,
+                    sent_to: data.address,
+                    status: 1
 				});
             });
     }

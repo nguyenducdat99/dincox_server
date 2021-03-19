@@ -25,7 +25,10 @@ module.exports = {
         "tblorders(id_order,id_product,discount,size,quantity)" +
         "values(?,?,?,?,?)";
         let data = req.body;
+		console.log('order detail');
+		console.log(data);
 
+			/*
         db.query(
             sql, 
             [], 
@@ -39,6 +42,7 @@ module.exports = {
                     quantity: data.quantity
 				});
             });
+			*/
     }
     // ,
     // update: (req, res) => {
