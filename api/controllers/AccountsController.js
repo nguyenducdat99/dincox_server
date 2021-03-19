@@ -28,12 +28,12 @@ module.exports = {
 					res.json(
                         {
                             message: 'Đăng nhập thành công',
+                            id_account: response[0].id_account,
                             user_name: data.user_name,
 							position: response[0].position,
                             token: token
                         }
                     );
-
 
                 } catch (error) {
                     res.json(error)
