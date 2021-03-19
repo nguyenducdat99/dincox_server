@@ -92,8 +92,8 @@ module.exports = function(app) {
     app.route('/orders/:id')
         .get(orderCtrl.detail);
     app.route('/orders-detail')
-        .get(orderDetailCtrl.get);
-        // .post(orderDetailCtrl.store);
+        .get(orderDetailCtrl.get)
+        .post(orderDetailCtrl.store);
     app.route('/orders-detail/:id')
         .get(orderDetailCtrl.detail);
 

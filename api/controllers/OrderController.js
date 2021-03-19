@@ -26,10 +26,12 @@ module.exports = {
         "tblorders(id_account,create_at,email,number_phone,receiver,sent_to,transport_fee,status)" +
         "values(?,?,?,?,?,?,?,?)";
         let data = req.body.info;
-		let transport_fee = data.transportFee;
+		let transport_fee = req.body.transportFee;
 		let id_account = data.id_account?data.id_account:37;
 		let d = new Date();
 		let create_at = d.getDate() + '/' + (d.getMonth()+1) + '/' + d.getFullYear();
+		
+		
 		
         db.query(
             sql, 
@@ -45,6 +47,7 @@ module.exports = {
                     number_phone: data.numberPhone,
                     receiver: data.name,
                     sent_to: data.address,
+					transport_fee: transport_fee,
                     status: 1
 				});
             });

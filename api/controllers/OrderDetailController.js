@@ -22,16 +22,13 @@ module.exports = {
     },
     store: (req, res) => {
         let sql = "INSERT INTO " + 
-        "tblorders(id_order,id_product,discount,size,quantity)" +
-        "values(?,?,?,?,?)";
+        "tblorderdetails (id_order,id_product,discount,size,quantity) " +
+        "values ?";
         let data = req.body;
-		console.log('order detail');
-		console.log(data);
-
-			/*
+		
         db.query(
             sql, 
-            [], 
+            [data], 
             (err, response) => {
                 if(err) throw err;
                 res.json({
@@ -40,9 +37,9 @@ module.exports = {
                     discount: data.discount,
                     size: data.size,
                     quantity: data.quantity
-				});
-            });
-			*/
+			});
+		});
+			
     }
     // ,
     // update: (req, res) => {
