@@ -12,12 +12,12 @@ module.exports = {
         });
     },
     detail: (req, res) => {
-        let sql = "SELECT * FROM tblorders WHERE id_order=?";
+        let sql = "SELECT * FROM tblorders WHERE number_phone=?";
         let id = req.params.id;
 
         db.query(sql, [id], (err, response) => {
             if (err) throw err;
-            res.json(response[0]);
+            res.json(response);
         });
     }
 	,
