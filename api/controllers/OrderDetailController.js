@@ -20,6 +20,15 @@ module.exports = {
             res.json(response[0]);
         });
     },
+	getOrder: (req, res) => {
+		let sql = "SELECT * FROM tblorderdetails WHERE id_order=?";
+        let id = req.params.id;
+
+        db.query(sql, [id], (err, response) => {
+            if (err) throw err;
+            res.json(response);
+        });
+	},
     store: (req, res) => {
         let sql = "INSERT INTO " + 
         "tblorderdetails (id_order,id_product,discount,size,quantity) " +
