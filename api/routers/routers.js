@@ -1,17 +1,19 @@
 // var authentication = require('../middlewares/authentication');
 const { upload } = require('../middlewares/upload');
+const vertify = require('../middlewares/authentication');
+const permission = require('../middlewares/checkPermission');
 
 module.exports = function(app) {
     // account router
     let accountsCtrl = require('../controllers/AccountsController');
     
     app.route('/accounts')
-        .get(accountsCtrl.get)
-        .post(accountsCtrl.store);
+        .get(vertify,permission,accountsCtrl.get)
+        .post(vertify,permission,accountsCtrl.store);
     app.route('/accounts/:id')
-        .get(accountsCtrl.detail)
-        .put(accountsCtrl.update)
-        .delete(accountsCtrl.delete);
+        .get(vertify,permission,accountsCtrl.detail)
+        .put(vertify,permission,accountsCtrl.update)
+        .delete(vertify,permission,accountsCtrl.delete);
     app.route('/login')
         .post(accountsCtrl.login);
 
@@ -21,62 +23,62 @@ module.exports = function(app) {
 
     app.route('/products')
         .get(productsCtrl.get)
-        .post(productsCtrl.store);
+        .post(vertify,permission,productsCtrl.store);
     app.route('/products/:id')
         .get(productsCtrl.detail)
-        .put(productsCtrl.update)
-        .delete(productsCtrl.delete);
+        .put(vertify,permission,productsCtrl.update)
+        .delete(vertify,permission,productsCtrl.delete);
 
     // categories router
     let categoriesCtrl = require('../controllers/CategoriesController');
 
     app.route('/categories')
         .get(categoriesCtrl.get)
-        .post(categoriesCtrl.store);
+        .post(vertify,permission,categoriesCtrl.store);
     app.route('/categories/:id')
         .get(categoriesCtrl.detail)
-        .put(categoriesCtrl.update)
-        .delete(categoriesCtrl.delete);
+        .put(vertify,permission,categoriesCtrl.update)
+        .delete(vertify,permission,categoriesCtrl.delete);
 
     // images router
     app.route('/collections')
         .get(imagesCtrl.get)
-        .post(upload.single('path'),imagesCtrl.store);
+        .post(vertify,permission,upload.single('path'),imagesCtrl.store);
     app.route('/collections/:id')
         .get(imagesCtrl.detail)
-        .put(imagesCtrl.update)
-        .delete(imagesCtrl.delete);
+        .put(vertify,permission,imagesCtrl.update)
+        .delete(vertify,permission,imagesCtrl.delete);
 
     // size router
     let sizeCtrl = require('../controllers/SizesController');
 
     app.route('/sizes')
         .get(sizeCtrl.get)
-        .post(sizeCtrl.store);
+        .post(vertify,permission,sizeCtrl.store);
     app.route('/sizes/:id')
         .get(sizeCtrl.detail)
-        .put(sizeCtrl.update)
-        .delete(sizeCtrl.delete);
+        .put(vertify,permission,sizeCtrl.update)
+        .delete(vertify,permission,sizeCtrl.delete);
 
     // new router
     let newsCtrl = require('../controllers/NewsController');
 
     app.route('/news')
         .get(newsCtrl.get)
-        .post(newsCtrl.store);
+        .post(vertify,permission,newsCtrl.store);
     app.route('/news/:id')
         .get(newsCtrl.detail)
-        .put(newsCtrl.update)
-        .delete(newsCtrl.delete);
+        .put(vertify,permission,newsCtrl.update)
+        .delete(vertify,permission,newsCtrl.delete);
 
     // size detail router
     let sizeDetailsCtrl = require('../controllers/SizeDetailsController');
 
     app.route('/size-details')
         .get(sizeDetailsCtrl.get)
-        .post(sizeDetailsCtrl.store)
-		.put(sizeDetailsCtrl.update)
-        .delete(sizeDetailsCtrl.delete);
+        .post(vertify,permission,sizeDetailsCtrl.store)
+		.put(vertify,permission,sizeDetailsCtrl.update)
+        .delete(vertify,permission,sizeDetailsCtrl.delete);
     app.route('/multi-size-details')
         .get(sizeDetailsCtrl.detail);
     app.route('/size-details/:id')
@@ -91,7 +93,6 @@ module.exports = function(app) {
         .post(orderCtrl.store);
     app.route('/orders/:id')
         .get(orderCtrl.detail);
-		
 		
     app.route('/orders-detail')
         .get(orderDetailCtrl.get)
