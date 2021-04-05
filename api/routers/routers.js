@@ -91,10 +91,13 @@ module.exports = function(app) {
         .post(orderCtrl.store);
     app.route('/orders/:id')
         .get(orderCtrl.detail);
+		
+		
     app.route('/orders-detail')
         .get(orderDetailCtrl.get)
         .post(orderDetailCtrl.store);
     app.route('/orders-detail/:id')
         .get(orderDetailCtrl.detail);
-
+    app.route('/orders-detail/order/:id')
+        .get(orderDetailCtrl.getOrder);
 };

@@ -7,38 +7,60 @@ var token = '';
 
 module.exports = {
     login: (req, res) => {
-        let sql = 'SELECT * FROM tblaccounts WHERE user_name=? AND password=?';
-        let data = req.body;
+        const sql = 'SELECT * FROM tblaccounts WHERE user_name=? AND password=?';
+        const {user_name = '', password = ''} = req.body;
 	
+        if (user_name===''||password==='') 
+            return res.json(
+                {
+                    status: 0,
+                    code: '401',
+                    data: {},
+                    message: 'Giá trị nhập vào chưa đúng!'
+                }
+            )
 
-        db.query(sql, [data.user_name, data.password], (err, response) => {
+
+        db.query(sql, [user_name, password], (err, response) => {
             if (err) throw err;
             if (typeof response[0] === "undefined"||response[0].status===0 ) {
-                res.json(
+                return res.json(
                     {
-                        message: "Sai tài khoản hoặc mật khẩu.",
-                        user_name: '',
-                        token: ''
+                        status: 0,
+                        code: '401',
+                        data: {},
+                        message: 'Tài khoản hoặc mật khẩu không chính xác!'
                     }
                 );
-            }else{
-                try {
-                    token = jwt.sign({user_name: data.user_name},process.env.JWT_SERCET,{ expiresIn: 60 * 60 * 24 });
-                    
-					res.json(
-                        {
-                            message: 'Đăng nhập thành công',
-                            id_account: response[0].id_account,
-                            user_name: data.user_name,
-							position: response[0].position,
-                            token: token
-                        }
-                    );
+            }
 
-                } catch (error) {
-                    res.json(error)
+            const token = jwt.sign(
+                {
+                    id_account: response[0].id_account,
+                    user_name: user_name,
+                    position: response[0].position
+                },
+                process.env.JWT_SERCET,
+                {
+                    expiresIn: '7d'
+                },
+                (err, token) => {
+                    if (err) return res.json({
+                        status: 0,
+                        code: '500',
+                        data: {},
+                        message: err.message
+                    })
+
+                    return res.json({
+                        status: 1,
+                        code: '200',
+                        data: {token},
+                        message: 'Đăng nhập thành công!'
+                    })
                 }
-            };
+            )
+            
         });
     },
     get: (req, res) => {
