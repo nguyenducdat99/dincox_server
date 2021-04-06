@@ -16,6 +16,8 @@ module.exports = function(app) {
         .delete(vertify,permission,accountsCtrl.delete);
     app.route('/login')
         .post(accountsCtrl.login);
+    app.route('/register')
+        .post(accountsCtrl.register)
 
     // product router
     let productsCtrl = require('../controllers/ProductsController');

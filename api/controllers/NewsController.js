@@ -4,29 +4,38 @@ const { response } = require('express');
 
 module.exports = {
     get: (req, res) => {
-        let sql = 'SELECT * FROM tblnews';
+        try {
+            let sql = 'SELECT * FROM tblnews';
 
-        db.query(sql, (err, response) => {
-            if (err) throw err;
-            res.json(response);
-        });
+            db.query(sql, (err, response) => {
+                if (err) throw err;
+                res.json(response);
+            });
+        } catch (error) {
+            console.log(error);
+        }
     },
     detail: (req, res) => {
-        let sql = "SELECT * FROM tblnews WHERE id_new=?";
-        let id = req.params.id;
+        try {
+            let sql = "SELECT * FROM tblnews WHERE id_new=?";
+            let id = req.params.id;
 
-        db.query(sql,[id], (err, response) => {
-            if (err) throw err;
-            res.json(response[0]);
-        });
+            db.query(sql,[id], (err, response) => {
+                if (err) throw err;
+                res.json(response[0]);
+            });
+        } catch (error) {
+            console.log(error);
+        }
     },
     store: (req, res) => {
-        let sql = "INSERT INTO " +
-        "tblnews(title,author,contents,reference_links,status)"+
-        " VALUE (?,?,?,?,?)";
-        let data = req.body;
+        try {
+            let sql = "INSERT INTO " +
+            "tblnews(title,author,contents,reference_links,status)"+
+            " VALUE (?,?,?,?,?)";
+            let data = req.body;
 
-        db.query(
+            db.query(
             sql, 
             [data.title,data.author,data.contents,data.reference_links,(data.status*1)], 
             (err, response) => {
@@ -42,15 +51,19 @@ module.exports = {
                     status: (data.status*1)
                 });
             });
+        } catch (error) {
+            console.log(error);
+        }
     },
     update: (req, res) => {
-        let sql = "UPDATE tblnews "+
-        "SET title=?,author=?,contents=?,reference_links=?,status=?"+
-        " WHERE id_new=?";
-        let data = req.body;
-        let id = req.params.id;
+        try {
+            let sql = "UPDATE tblnews "+
+            "SET title=?,author=?,contents=?,reference_links=?,status=?"+
+            " WHERE id_new=?";
+            let data = req.body;
+            let id = req.params.id;
 
-        db.query(
+            db.query(
             sql, 
             [data.title,data.author,data.contents,data.reference_links,(data.status*1), id], 
             (err, response) => {
@@ -65,15 +78,22 @@ module.exports = {
                     reference_links: data.reference_links,
                     status: (data.status*1)
                 });
-            });        
+            }); 
+        } catch (error) {
+            console.log(error);
+        }       
     },
     delete: (req, res) => {
-        let sql = "DELETE FROM tblnews WHERE id_new=?";
-        let id = req.params.id; 
-
-        db.query(sql, [id], (err, response) => {
-            if (err) throw err;
-            res.json({'message': "Delete success."});
-        });
+        try {
+            let sql = "DELETE FROM tblnews WHERE id_new=?";
+            let id = req.params.id; 
+    
+            db.query(sql, [id], (err, response) => {
+                if (err) throw err;
+                res.json({'message': "Delete success."});
+            }); 
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
