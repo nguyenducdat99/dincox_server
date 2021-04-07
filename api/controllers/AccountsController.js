@@ -98,15 +98,14 @@ module.exports = {
     update: (req, res) => {
         try {
             let sql = "UPDATE tblaccounts " + 
-            "SET  password=?,position=?,email=?,status=?" + 
+            "SET  password=?,position=?,status=?" + 
             " WHERE id_account = ?";
             let id = req.params.id;
             let data = req.body;
 
-
             db.query(
             sql, 
-            [data.password, data.position, data.email, (data.status*1),id], 
+            [data.password, data.position, (data.status*1),id], 
             (err, response) => {
                 if (err) throw err;
                 res.json(
@@ -133,21 +132,50 @@ module.exports = {
             let data = req.body;
 
             db.query(
-            sql,
-            [data.user_name, data.password, data.position, data.email, (data.status*1)], 
-            (err, response) => {
-                if (err) throw err;
-                res.json(
-                    {
-                        id_account: response.insertId,
-                        user_name: data.user_name,
-                        password: data.password,
-                        position: data.position,
-                        email: data.email,
-                        status: (data.status*1)
+                'SELECT * FROM tblaccounts',
+                (err, response) => {
+                    if (err) throw err;
+                    
+                    let check = false;
+
+                    response.forEach(element => {
+                        if (element.user_name===data.user_name||
+                            element.email===data.email) {
+                                check = true;
+                            }
+                    });
+
+                    if (check) {
+                        res.json({
+                            code: '401',
+                            message: 'Tài khoản hoặc email đã tồn tại trong hệ thống.'
+                        })
+                    }else {
+                        db.query(
+                            sql,
+                            [data.user_name, data.password, data.position, data.email, (data.status*1)], 
+                            (err, response) => {
+                                if (err) throw err;
+                                res.json(
+                                    {
+                                        code: '200',
+                                        message: 'Thao tác thành công.',
+                                        data: {
+                                            id_account: response.insertId,
+                                            user_name: data.user_name,
+                                            password: data.password,
+                                            position: data.position,
+                                            email: data.email,
+                                            status: (data.status*1)
+                                        }
+                                    }
+                                );
+                            });
                     }
-                );
-            });
+                }
+            )
+
+
         } catch (error) {
             console.log(error);
             return;
