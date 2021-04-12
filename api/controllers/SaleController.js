@@ -3,7 +3,7 @@ const mysql = require('mysql');
 const db = require('../database/db');
 const { response } = require('express');
 const jwt = require('jsonwebtoken');
-// const moment = require('moment');
+const moment = require('moment');
 var token = '';
 
 module.exports = {
@@ -70,49 +70,22 @@ module.exports = {
             " VALUE (?,?,?,?)";
             let data = req.body;
 
+
             db.query(
-                'SELECT * FROM tblsales',
+                sql,
+                [data.sale_name, data.start_at, data.end_at, (data.status*1)], 
                 (err, response) => {
                     if (err) throw err;
-                    
-                    let check = false;
-
-                    response.forEach(element => {
-                        // const startAtInput = moment(data.start_at);
-                        // const startAtElement = moment(element.start_at);
-                        // const endAtElement = moment(element.end_at);
-                        // if (moment(data.start_at).isBetween(moment(element.start_at),moe))
-                    });
-
-                    if (check) {
-                        res.json({
-                            code: '401',
-                            message: 'Tài khoản hoặc email đã tồn tại trong hệ thống.'
-                        })
-                    }else {
-                        db.query(
-                            sql,
-                            [data.user_name, data.password, data.position, data.email, (data.status*1)], 
-                            (err, response) => {
-                                if (err) throw err;
-                                res.json(
-                                    {
-                                        code: '200',
-                                        message: 'Thao tác thành công.',
-                                        data: {
-                                            id_account: response.insertId,
-                                            user_name: data.user_name,
-                                            password: data.password,
-                                            position: data.position,
-                                            email: data.email,
-                                            status: (data.status*1)
-                                        }
-                                    }
-                                );
-                            });
-                    }
-                }
-            )
+                    res.json(
+                        {
+                            id_sale: response.insertId,
+                            sale_name: data.sale_name,
+                            start_at: data.start_at,
+                            end_at: data.end_at,
+                            status: (data.status*1)
+                        }
+                );
+            });
 
 
         } catch (error) {
