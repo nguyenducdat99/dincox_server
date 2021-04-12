@@ -5,7 +5,7 @@ const permission = require('../middlewares/checkPermission');
 
 module.exports = function(app) {
     // account router
-    let accountsCtrl = require('../controllers/AccountsController');
+    const accountsCtrl = require('../controllers/AccountsController');
     
     app.route('/accounts')
         .get(vertify,permission,accountsCtrl.get)
@@ -20,8 +20,8 @@ module.exports = function(app) {
         .post(accountsCtrl.register)
 
     // product router
-    let productsCtrl = require('../controllers/ProductsController');
-    let imagesCtrl = require('../controllers/ImagesController');
+    const productsCtrl = require('../controllers/ProductsController');
+    const imagesCtrl = require('../controllers/ImagesController');
 
     app.route('/products')
         .get(productsCtrl.get)
@@ -32,7 +32,7 @@ module.exports = function(app) {
         .delete(vertify,permission,productsCtrl.delete);
 
     // categories router
-    let categoriesCtrl = require('../controllers/CategoriesController');
+    const categoriesCtrl = require('../controllers/CategoriesController');
 
     app.route('/categories')
         .get(categoriesCtrl.get)
@@ -52,7 +52,7 @@ module.exports = function(app) {
         .delete(vertify,permission,imagesCtrl.delete);
 
     // size router
-    let sizeCtrl = require('../controllers/SizesController');
+    const sizeCtrl = require('../controllers/SizesController');
 
     app.route('/sizes')
         .get(sizeCtrl.get)
@@ -63,7 +63,7 @@ module.exports = function(app) {
         .delete(vertify,permission,sizeCtrl.delete);
 
     // new router
-    let newsCtrl = require('../controllers/NewsController');
+    const newsCtrl = require('../controllers/NewsController');
 
     app.route('/news')
         .get(newsCtrl.get)
@@ -74,7 +74,7 @@ module.exports = function(app) {
         .delete(vertify,permission,newsCtrl.delete);
 
     // size detail router
-    let sizeDetailsCtrl = require('../controllers/SizeDetailsController');
+    const sizeDetailsCtrl = require('../controllers/SizeDetailsController');
 
     app.route('/size-details')
         .get(sizeDetailsCtrl.get)
@@ -87,8 +87,8 @@ module.exports = function(app) {
         .get(sizeDetailsCtrl.IdProductdetail);
 
     // order, order detail router
-    let orderCtrl = require('../controllers/OrderController');
-    let orderDetailCtrl = require('../controllers/OrderDetailController');
+    const orderCtrl = require('../controllers/OrderController');
+    const orderDetailCtrl = require('../controllers/OrderDetailController');
 
     app.route('/orders')
         .get(orderCtrl.get)
@@ -103,4 +103,10 @@ module.exports = function(app) {
         .get(orderDetailCtrl.detail);
     app.route('/orders-detail/order/:id')
         .get(orderDetailCtrl.getOrder);
+
+    const saleCtrl = require('../controllers/SaleController');
+
+    app.router('/sales')
+        .get(saleCtrl.get)
+        .post(saleCtrl.store);
 };
