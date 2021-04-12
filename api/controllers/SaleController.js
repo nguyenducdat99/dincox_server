@@ -3,7 +3,7 @@ const mysql = require('mysql');
 const db = require('../database/db');
 const { response } = require('express');
 const jwt = require('jsonwebtoken');
-const moment = require('moment');
+// const moment = require('moment');
 var token = '';
 
 module.exports = {

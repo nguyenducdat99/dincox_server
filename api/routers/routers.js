@@ -106,7 +106,7 @@ module.exports = function(app) {
 
     const saleCtrl = require('../controllers/SaleController');
 
-    app.router('/sales')
+    app.route('/sales')
         .get(saleCtrl.get)
         .post(saleCtrl.store);
 };
