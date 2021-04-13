@@ -111,5 +111,5 @@ module.exports = function(app) {
         .post(saleCtrl.store);
     app.route('/sales/:id')
         .get(saleCtrl.detail)
-        .post(saleCtrl.update);
+        .put(saleCtrl.update);
 };

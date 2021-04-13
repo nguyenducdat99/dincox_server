@@ -41,10 +41,13 @@ module.exports = {
             " WHERE id_sale = ?";
             let id = req.params.id;
             let data = req.body;
+            const start_at = moment(data.start_at).format('yyyy-MM-DD')
+            const end_at = moment(data.end_at).format('yyyy-MM-DD')
+
 
             db.query(
             sql, 
-            [data.sale_name,data.start_at, data.end_at, (data.status*1),id], 
+            [data.sale_name,start_at, end_at, (data.status*1),id], 
             (err, response) => {
                 if (err) throw err;
                 res.json(
