@@ -47,6 +47,7 @@ module.exports = {
                     (err, response)=>{
                         if (err) throw err;
                         res.json({
+                            id_image: response.insertId,
                             id_product: idProduct,
                             id_new: idNew,
                             title: data.title,
