@@ -109,4 +109,7 @@ module.exports = function(app) {
     app.route('/sales')
         .get(saleCtrl.get)
         .post(saleCtrl.store);
+    app.route('/sales/:id')
+        .get(saleCtrl.detail)
+        .post(saleCtrl.update);
 };
