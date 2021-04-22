@@ -112,4 +112,15 @@ module.exports = function(app) {
     app.route('/sales/:id')
         .get(saleCtrl.detail)
         .put(saleCtrl.update);
+
+
+    const saleDetailsCtrl = require('../controllers/SaleDetailsController');
+
+    app.route('/sale-details')
+        .get(saleDetailsCtrl.get)
+        .post(saleDetailsCtrl.store);
+    app.route('/sale-details/:id')
+        .get(saleDetailsCtrl.detail);
+
+
 };
