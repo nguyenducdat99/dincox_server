@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const db = require('../database/db');
 const { response } = require('express');
+const moment = require('moment');
 
 module.exports = {
     get: (req, res) => {
@@ -31,20 +32,21 @@ module.exports = {
     store: (req, res) => {
         try {
             let sql = "INSERT INTO " +
-            "tblnews(title,author,contents,reference_links,status)"+
-            " VALUE (?,?,?,?,?)";
-            let data = req.body;
+            "tblnews(title,author,created_at,contents,reference_links,status)"+
+            " VALUE (?,?,?,?,?,?)";
+            const data = req.body;
+            const created_at = moment(new Date()).format('DD-MM-YYYY');
 
             db.query(
             sql, 
-            [data.title,data.author,data.contents,data.reference_links,(data.status*1)], 
+            [data.title,data.author,created_at,data.contents,data.reference_links,(data.status*1)], 
             (err, response) => {
                 if (err) throw err;
                 res.json({
                     id_new: response.insertId,
                     title: data.title,
                     author: data.author,
-                    created_at: null,
+                    created_at: created_at,
                     edited_at: null,
                     contents: data.contents,
                     reference_links: data.reference_links,
@@ -60,8 +62,8 @@ module.exports = {
             let sql = "UPDATE tblnews "+
             "SET title=?,author=?,contents=?,reference_links=?,status=?"+
             " WHERE id_new=?";
-            let data = req.body;
-            let id = req.params.id;
+            const data = req.body;
+            const id = req.params.id;
 
             db.query(
             sql, 
