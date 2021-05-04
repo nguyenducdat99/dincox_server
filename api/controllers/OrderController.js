@@ -5,7 +5,7 @@ const { response } = require('express');
 module.exports = {
     get: (req, res) => {
         try {
-            let sql = 'SELECT * FROM tblorders';
+            let sql = 'SELECT * FROM tblorders ORDER BY id_order DESC';
 
             db.query(sql, (err, response) => {
                 if (err) throw err;
@@ -57,6 +57,30 @@ module.exports = {
                     sent_to: data.address,
                     transport_fee: transport_fee,
                     status: 1
+                });
+            });
+        } catch (error) {
+            
+        }
+    },
+    updateStatus: (req,res) => {
+        try {
+            let sql = "UPDATE tblorders SET " + 
+            " status=? " +
+            "WHERE id_order=?";
+
+            let id = req.params.id;
+            const data = req.body;
+            
+            
+            db.query(
+            sql, 
+            [data.status, id], 
+            (err, response) => {
+                if(err) throw err;
+                res.json({
+                    id_order: id,
+                    status: data.status
                 });
             });
         } catch (error) {
