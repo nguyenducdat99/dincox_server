@@ -1,6 +1,7 @@
 const mysql = require("mysql");
 const db = require("../database/db");
 const { response } = require("express");
+const moment = require("moment");
 
 module.exports = {
   get: (req, res) => {
@@ -43,12 +44,10 @@ module.exports = {
         "INSERT INTO " +
         "tblorders(id_account,create_at,email,number_phone,receiver,sent_to,transport_fee,status)" +
         "values(?,?,?,?,?,?,?,?)";
-      let data = req.body.info;
-      let transport_fee = req.body.transportFee;
-      let id_account = data.id_account ? data.id_account : 37;
-      let d = new Date();
-      let create_at =
-        d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear();
+      const data = req.body.info;
+      const transport_fee = req.body.transportFee;
+      const id_account = data.id_account ? data.id_account : 37;
+      const create_at = moment(new Date()).format("yyyy-MM-DD");
 
       db.query(
         sql,
@@ -77,7 +76,9 @@ module.exports = {
           });
         }
       );
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   },
   updateStatus: (req, res) => {
     try {
