@@ -59,7 +59,7 @@ module.exports = {
           data.name,
           data.address,
           transport_fee,
-          1,
+          0,
         ],
         (err, response) => {
           if (err) throw err;
